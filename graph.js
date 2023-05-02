@@ -33,7 +33,12 @@ class Graph {
   }
 
   // this function accepts a vertex and removes it from the nodes property, it also updates any adjacency lists that include that vertex
-  removeVertex(vertex) {}
+  removeVertex(vertex) {
+    for(let node of this.nodes) {
+      this.removeEdge(vertex, node);
+    }
+    this.nodes.delete(vertex);
+  }
 
   // this function returns an array of Node values using DFS
   depthFirstSearch(start) {}
@@ -41,5 +46,16 @@ class Graph {
   // this function returns an array of Node values using BFS
   breadthFirstSearch(start) {}
 }
+let graph = new Graph();
+let a = new Node("A");
+let b = new Node("B");
+let c = new Node("C");
+let d = new Node("D");
+graph.addVertices([a, b, c, d]);
+graph.addEdge(a, b);
+graph.addEdge(a, c);
+graph.addEdge(b, d);
+graph.addEdge(c, d);
+graph.removeVertex(a);
 
 module.exports = {Graph, Node}
