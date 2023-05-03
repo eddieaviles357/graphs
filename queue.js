@@ -44,6 +44,10 @@ class QNode {
       this.size--;
       // make sure next pointer is cleared
       temp.next = null;
+      if(this.size === 0) {
+        this.first = null;
+        this.last = null;
+      }
       return temp.val;
     }
   

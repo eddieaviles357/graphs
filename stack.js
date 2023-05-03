@@ -44,6 +44,10 @@ class SNode {
       this.first = this.first.next; // assign new top of stack
       popped.next = null; // remove reference to next
       this.size--; // decrement size
+      if(this.size === 0) {
+        this.first = null;
+        this.last = null;
+      }
       return popped.val; // return value of popped node
     }
   
