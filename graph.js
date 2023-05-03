@@ -1,3 +1,6 @@
+const Queue = require("./queue");
+const Stack = require("./stack");
+
 class Node {
   constructor(value, adjacent = new Set()) {
     this.value = value;
@@ -41,21 +44,54 @@ class Graph {
   }
 
   // this function returns an array of Node values using DFS
-  depthFirstSearch(start) {}
+  depthFirstSearch(start) {
+    let verticesStack = new Stack();
+    let curr = null;
+    let visited = new Set();
+    let visitedArr = [];
+
+    verticesStack.push(start);
+    visited.add(start);
+
+    while(!(verticesStack.isEmpty())) {
+      curr = verticesStack.pop(); // pop from stack
+      visitedArr.push(curr.value);
+
+      curr.adjacent.forEach( node => { // loop through adjacent vertices
+        if(!visited.has(node)) { // is it in the set?
+          visited.add(node); // add to set
+          verticesStack.push(node); // add to stack  
+        };
+      });
+    };
+    return visitedArr;
+  }
 
   // this function returns an array of Node values using BFS
-  breadthFirstSearch(start) {}
-}
-let graph = new Graph();
-let a = new Node("A");
-let b = new Node("B");
-let c = new Node("C");
-let d = new Node("D");
-graph.addVertices([a, b, c, d]);
-graph.addEdge(a, b);
-graph.addEdge(a, c);
-graph.addEdge(b, d);
-graph.addEdge(c, d);
-graph.removeVertex(a);
+  breadthFirstSearch(start) {
+    let verticesQueue = new Queue();
+    let curr = null;
+    let visited = new Set();
+    let visitedArr = [];
+    
+    verticesQueue.enqueue(start); // we'll use our own queue
+    visited.add(start); 
+
+    while(!(verticesQueue.isEmpty())) {
+      curr = verticesQueue.dequeue(); // remove from queue
+      visitedArr.push(curr.value);
+
+      curr.adjacent.forEach( node => { // loop through adjacent vertices
+        if(!visited.has(node)) { // is it in the set?
+          visited.add(node); // add to set
+          verticesQueue.enqueue(node); // add to queue  
+        };
+      });
+
+    };
+    // return an array of vertices
+    return visitedArr;
+  }
+};
 
 module.exports = {Graph, Node}
